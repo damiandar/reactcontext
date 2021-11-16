@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react'
+import Layout from './components/Layout';
+import Prueba from './components/Prueba';
+import TemaContext,{temas} from './context/TemaContext';
 
-function App() {
+const App = () => {
+  const [temaEstado, setTemaEstado] = useState(temas.oscuro);
+  const [usuario,setUsuario]=useState("rosso");
+  const handleCambiarTema=()=>{
+    setTemaEstado(()=>{
+      return temaEstado===temas.oscuro ? temas.claro : temas.oscuro;
+    })
+  }
+  const handleCambiarUsuario=(user)=>{
+    setUsuario(user);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <TemaContext.Provider value={{temaEstado,usuario, handleCambiarTema,handleCambiarUsuario}}> 
+      <Layout>
+        <h1>Componente </h1>
+        <Prueba/>
+      </Layout>
+   
+    </TemaContext.Provider>
+  )
 }
 
-export default App;
+export default App
